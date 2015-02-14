@@ -21,7 +21,7 @@ class PluginsController < ApplicationController
     @plugins = Plugin.where(:id => 0).paginate :page => params[:page]
 
     # get plugins
-    @plugins = Plugin.where("public_flag = true").order('updated_at DESC').paginate :page => params[:page]
+    @plugins = Plugin.where(["public_flag = ?", true]).order('updated_at DESC').paginate :page => params[:page]
 
     respond_to do |format|
       format.html

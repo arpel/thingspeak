@@ -27,7 +27,7 @@ gem 'simplificator-rwebthumb', :git => "git://github.com/simplificator/rwebthumb
 gem 'tweetstream'
 gem 'capistrano', '~> 2.15.4'
 gem 'rack-utf8_sanitizer'
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
 gem 'actionpack-xml_parser'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem 'chronic'
@@ -67,4 +67,8 @@ group :test do
   gem 'ZenTest'
   gem 'database_cleaner', '~> 1.2.0'
 end
+
+#gem 'unicorn'
+gem 'yaml_db'
+gem 'puma'
 

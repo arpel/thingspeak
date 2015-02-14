@@ -99,12 +99,30 @@ class FeedFactory < ApplicationController
   def get_feeds
     # get feeds based on entry ids
     if @options[:start_entry_id].present? || @options[:end_entry_id].present?
-      @feeds = Feed.from("feeds FORCE INDEX (index_feeds_on_channel_id_and_entry_id)")
-        .where(:channel_id => @channel.id, :entry_id => entry_id_range)
+      adapter_type = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
+      case adapter_type
+      when :mysql, :mysql2
+         @feeds = Feed.from("feeds FORCE INDEX (index_feeds_on_channel_id_and_entry_id)")
+           .where(:channel_id => @channel.id, :entry_id => entry_id_range)
+      when :sqlite
+         @feeds = Feed.from("feeds INDEXED BY index_feeds_on_channel_id_and_entry_id")
+           .where(:channel_id => @channel.id, :entry_id => entry_id_range)
+      else
+         raise NotImplementedError, "Unknown adapter type '#{adapter_type}'"
+      end
     # get feed based on conditions
     else
-      @feeds = Feed.from("feeds FORCE INDEX (index_feeds_on_channel_id_and_created_at)")
-        .where(:channel_id => @channel.id, :created_at => @date_range)
+      adapter_type = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
+      case adapter_type
+      when :mysql, :mysql2
+         @feeds = Feed.from("feeds FORCE INDEX (index_feeds_on_channel_id_and_created_at)")
+           .where(:channel_id => @channel.id, :created_at => @date_range)
+      when :sqlite
+         @feeds = Feed.from("feeds INDEXED BY index_feeds_on_channel_id_and_created_at")
+           .where(:channel_id => @channel.id, :created_at => @date_range)
+      else
+         raise NotImplementedError, "Unknown adapter type '#{adapter_type}'"
+      end
     end
 
     # apply filters and load the feeds

@@ -9,10 +9,10 @@ RATE_LIMIT = false
 RATE_LIMIT_FREQUENCY = '15'
 
 # main production server to handle all requests (can be a proxy)
-APPLICATION_IP_ADDRESS = '127.0.0.1'
+APPLICATION_IP_ADDRESS = 'thingspeak.jumptu.be'
 
 # domain for the API
-API_DOMAIN = 'http://127.0.0.1:3000/'
+API_DOMAIN = 'http://api.thingspeak.jumptu.be/'
 
 # get api key from HTTP headers if this value is present
 HTTP_HEADER_API_KEY_NAME = 'THINGSPEAKAPIKEY'
@@ -25,7 +25,7 @@ CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 
 # reset password base url
-RESET_PASSWORD_URL = 'http://127.0.0.1:3000//users/reset_password/'
+RESET_PASSWORD_URL = 'http://thingspeak.jumptu.be/users/reset_password/'
 
 # allow only these additional locales (use downcase, easier to parse)
 ALLOWED_LOCALES = ['pt-br','it']
