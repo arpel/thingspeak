@@ -503,6 +503,11 @@ class ChannelsController < ApplicationController
       csv_array = csv_array.reverse if date1.present? && date2.present? && date1 > date2
     end
 
+    # update entry_id for channel and feed
+    entry_id = channel.last_entry_id.nil? ? 1 : channel.last_entry_id + 1
+
+    newfeeds = []
+
     # loop through each row
     csv_array.each do |row|
       # if row isn't blank
@@ -531,9 +536,9 @@ class ChannelsController < ApplicationController
         row.delete_at(entry_id_column) if entry_id_column > 0
 
         # update entry_id for channel and feed
-        entry_id = channel.last_entry_id.nil? ? 1 : channel.last_entry_id + 1
         channel.last_entry_id = entry_id
         feed.entry_id = entry_id
+        entry_id = entry_id + 1
 
         # set feed data
         feed.channel_id = channel.id
@@ -550,11 +555,17 @@ class ChannelsController < ApplicationController
         feed.field8 = row[8] if feed.field8.blank?
 
         # save channel and feed
-        feed.save
-        channel.save
-
+        #feed.save
+        #channel.save
+        newfeeds << feed
       end
     end
+
+    # Finally save Channel entry id
+    channel.save
+
+    # Bulk save all lines at a time
+    Feed.import newfeeds
 
     # redirect
     flash[:notice] = t(:upload_successful)
