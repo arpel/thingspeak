@@ -71,4 +71,4 @@ end
 #gem 'unicorn'
 gem 'yaml_db'
 gem 'puma'
-
+gem "activerecord-import", ">= 0.4.0"
