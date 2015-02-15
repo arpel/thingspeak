@@ -32,8 +32,8 @@ class FeedFactory < ApplicationController
   # calculate the limit that should be used
   def calculate_limit
     limit = 100
-    limit = 8000 if @options[:results].present? || @options[:days].present? || @options[:start].present? || @options[:end].present? || @options[:start_entry_id] || @options[:end_entry_id]
-    limit = @options[:results].to_i if (@options[:results].present? && @options[:results].to_i < 8000)
+    limit = MAX_QUERY_RESULTS_LIMIT if @options[:results].present? || @options[:days].present? || @options[:start].present? || @options[:end].present? || @options[:start_entry_id] || @options[:end_entry_id]
+    limit = @options[:results].to_i if (@options[:results].present? && @options[:results].to_i < MAX_QUERY_RESULTS_LIMIT)
     return limit
   end
 

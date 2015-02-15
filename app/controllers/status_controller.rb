@@ -36,8 +36,8 @@ class StatusController < ApplicationController
       params[:days] = 1 if !params[:days]
 
       # set limits
-      limit = (request.format == 'csv') ? 1000000 : 8000
-      limit = params[:results].to_i if (params[:results] and params[:results].to_i < 8000)
+      limit = (request.format == 'csv') ? 1000000 : MAX_QUERY_RESULTS_LIMIT
+      limit = params[:results].to_i if (params[:results] and params[:results].to_i < MAX_QUERY_RESULTS_LIMIT)
 
       # get feed based on conditions
       @feeds = @channel.feeds

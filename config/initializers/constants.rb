@@ -30,3 +30,5 @@ RESET_PASSWORD_URL = 'http://thingspeak.jumptu.be/users/reset_password/'
 # allow only these additional locales (use downcase, easier to parse)
 ALLOWED_LOCALES = ['pt-br','it']
 
+MAX_QUERY_RESULTS_LIMIT = 80000
+
